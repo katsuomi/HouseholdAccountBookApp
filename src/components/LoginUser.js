@@ -6,6 +6,9 @@ import {loginuser} from "../actions";
 import {Link} from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
 
 
 class LoginUser extends Component {
@@ -39,7 +42,7 @@ class LoginUser extends Component {
           type={type}
           helperText={touched && error}
           {...input}
-          className="textfield"
+          className="width200px"
         />
     )
 
@@ -59,7 +62,7 @@ class LoginUser extends Component {
           type={type}
           helperText={touched && error}
           {...input}
-          className="textfield"
+          className="width200px"
         />
     )
 
@@ -70,22 +73,35 @@ class LoginUser extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="center top_space100px">
+                <div className="center marginTop100px">
                     家計簿アプリ <span className="bold">ログイン</span>
-                    <div>
+                </div>
+                <div>
+                    <section className="marginTop20px">
+                        <Grid justify="center" container>
+                            <Card className="width200px">
+                                <Typography className="boderBottomGrey center">DEMOアカウント</Typography>
+                                <Typography className="paddingLeft10px">email: demo@demo.com</Typography>
+                                <Typography className="paddingLeft10px">pass : demo123</Typography>
+                            </Card>
+                        </Grid>
+                    </section>
+                </div>
+                <div className="center">
+                    <section>
                         <form onSubmit={handleSubmit(this.SubmitLogin)}>
                             <br/>
-                            <Field label="メールアドレス" name="email" type="email" id="email" component={this.emailField} />
+                            <Field label="メールアドレス" name="email" component={this.emailField} />
                             <br/>
                             <br/>
-                            <Field label="パスワード" name="password" type="password" id="pass" component={this.passField} />
+                            <Field label="パスワード" name="password" component={this.passField} />
                             <br/>
                             <br/>
                             <Button variant="outlined" color="primary" type="submit" disabled={pristine || submitting}>
                                 ログイン
                             </Button>
                         </form> 
-                    </div>
+                    </section>
                     <br/>
                     <Link to="/password_reset" className="text_decoration_none">パスワードを忘れた方はこちら</Link>
                 </div>

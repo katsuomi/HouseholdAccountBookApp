@@ -10,8 +10,12 @@ body {
   text-align:center;
 }
 
-.top_space100px{
+.marginTop100px{
   margin-top: 100px;
+}
+
+.marginTop20px{
+  margin-top: 20px;
 }
 
 .bold{
@@ -20,4 +24,12 @@ body {
 
 .width200px{
   width: 200px;
+}
+
+.boderBottomGrey{
+  border-bottom: 1px solid rgb(192, 192, 192);
+}
+
+.paddingLeft10px{
+  padding-left: 10px;
 }

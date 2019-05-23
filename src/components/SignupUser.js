@@ -37,7 +37,7 @@ class SignupUser extends Component {
           type={type}
           helperText={touched && error}
           {...input}
-          className="textfield"
+          className="width200px"
         />
     )
 
@@ -57,7 +57,7 @@ class SignupUser extends Component {
           type={type}
           helperText={touched && error}
           {...input}
-          className="textfield"
+          className="width200px"
         />
     )
 
@@ -68,23 +68,22 @@ class SignupUser extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="center top_space100px">
+                <div className="center marginTop100px">
                     家計簿アプリ <span className="bold">新規登録</span>
-                    <div>
+                    <section>
                         <form onSubmit={handleSubmit(this.SubmitRegister)}>
                             <br/>
-                            <Field label="メールアドレス" name="email" type="email" component={this.emailField} />
+                            <Field label="メールアドレス" name="email" component={this.emailField} />
                             <br/>
                             <br/>
-                            <Field label="パスワード" name="password" type="password" component={this.passField} />
+                            <Field label="パスワード" name="password" component={this.passField} />
                             <br/>
                             <br/>
-
                             <Button variant="outlined" color="inherit" type="submit" disabled={pristine || submitting}>
                                 新規登録
                             </Button>
                         </form> 
-                    </div>
+                    </section>
 
                 </div>
             </React.Fragment>

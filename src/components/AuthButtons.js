@@ -20,6 +20,7 @@ class AuthButtons extends Component {
         const props = this.props
         return (
             <div>
+                <Link to="/" className="text_decoration_none"><MenuItem>ホーム</MenuItem></Link>
                 {props.uid ? 
                     <div>
                         <MenuItem onClick={this.logout}>ログアウト</MenuItem>     
