@@ -70,7 +70,7 @@ class LoginUser extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="center">
+                <div className="center top_space100px">
                     家計簿アプリ ログイン
                     <div>
                         <form onSubmit={handleSubmit(this.SubmitLogin)}>
@@ -87,7 +87,7 @@ class LoginUser extends Component {
                         </form> 
                     </div>
                     <br/>
-                    <Link to="/password_reset" className="decoration-none">パスワードを忘れた方はこちら</Link>
+                    <Link to="/password_reset" className="text_decoration_none">パスワードを忘れた方はこちら</Link>
                 </div>
             </React.Fragment>
         )

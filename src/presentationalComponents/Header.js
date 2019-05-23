@@ -23,19 +23,21 @@ class Header extends Component {
     render(){
         return (
             <MuiThemeProvider>
-                <Drawer
-                docked={false}
-                width={270}
-                open={this.state.open}
-                onRequestChange={this.handleToggle}
-                >
-                    <Link to="/login_user" className="text_decoration_none"><MenuItem>ログイン</MenuItem></Link>
-                    <Link to="/signup_user" className="text_decoration_none"><MenuItem>新規登録</MenuItem></Link>
-                </Drawer>
-                <AppBar
-                title="家計簿アプリ"
-                onLeftIconButtonClick={this.handleToggle}
-                />
+                <div>
+                    <Drawer
+                    docked={false}
+                    width={270}
+                    open={this.state.open}
+                    onRequestChange={this.handleToggle}
+                    >
+                        <Link to="/login_user" className="text_decoration_none"><MenuItem>ログイン</MenuItem></Link>
+                        <Link to="/signup_user" className="text_decoration_none"><MenuItem>新規登録</MenuItem></Link>
+                    </Drawer>
+                    <AppBar
+                    title="家計簿アプリ"
+                    onLeftIconButtonClick={this.handleToggle}
+                    />
+                </div>
             </MuiThemeProvider>
         );
     }

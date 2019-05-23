@@ -2,6 +2,18 @@ body {
   margin: 0;
 }
 
-.text_decoration_none {
+.text_decoration_none{
   text-decoration: none;
+}
+
+.center{
+  text-align:center;
+}
+
+.top_space100px{
+  margin-top: 100px;
+}
+
+.bold{
+  font-weight: bold;
 }

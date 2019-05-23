@@ -68,8 +68,8 @@ class SignupUser extends Component {
         return (
             <React.Fragment>
                 <Header />
-                <div className="center">
-                    家計簿アプリ 新規登録
+                <div className="center top_space100px">
+                    家計簿アプリ <span className="bold">新規登録</span>
                     <div>
                         <form onSubmit={handleSubmit(this.SubmitRegister)}>
                             <br/>

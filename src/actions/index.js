@@ -1,4 +1,4 @@
-import { db } from '../firebase/firebase'
+import { db } from '../components/firebase/firebase'
 import * as firebase from 'firebase';
 export const SIGNUP_USER = 'SIGNUP_USER'
 export const LOGIN_USER = 'LOGIN_USER'
