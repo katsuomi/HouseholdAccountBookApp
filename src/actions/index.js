@@ -48,7 +48,7 @@ export const loginuser = (email,password) => async dispatch => {
 export const logout = () => async dispatch => {
   firebase.auth().signOut()
   .then(_ => {
-    console.log("success")
+    console.log("SUCCESS")
   }, err => {
     console.log("error")
   });

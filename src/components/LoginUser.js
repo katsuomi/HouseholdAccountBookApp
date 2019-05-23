@@ -71,7 +71,7 @@ class LoginUser extends Component {
             <React.Fragment>
                 <Header />
                 <div className="center top_space100px">
-                    家計簿アプリ ログイン
+                    家計簿アプリ <span className="bold">ログイン</span>
                     <div>
                         <form onSubmit={handleSubmit(this.SubmitLogin)}>
                             <br/>

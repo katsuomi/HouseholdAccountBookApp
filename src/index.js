@@ -11,6 +11,7 @@ import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter,Route,Switch} from "react-router-dom";
 import thunk from "redux-thunk";
 import {composeWithDevTools} from "redux-devtools-extension"
+import PasswordReset from './components/PasswordReset';
 
 const enhancer = process.env.NODE_ENV === "development" ? composeWithDevTools(applyMiddleware(thunk)) : applyMiddleware(thunk)
 const store = createStore(reducer,enhancer)
@@ -22,6 +23,7 @@ ReactDOM.render(
                 <Route exact path="/" component={App} />
                 <Route exact path="/signup_user" component={SignupUser} />
                 <Route exact path="/login_user" component={LoginUser} />
+                <Route exact path="/password_reset" component={PasswordReset} />
 
             </Switch>
         </BrowserRouter>
