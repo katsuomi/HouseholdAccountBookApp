@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {signupuser} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
+import { withRouter } from 'react-router';
 
 
 class SignupUser extends Component {
@@ -101,6 +102,6 @@ const validate = values => {
 
 const mapDispatchToProps = ({signupuser })
 
-export default connect(null, mapDispatchToProps)(
+export default withRouter(connect(null, mapDispatchToProps)(
     reduxForm({ validate,form: "signupcompany" })(SignupUser)
-)
+))

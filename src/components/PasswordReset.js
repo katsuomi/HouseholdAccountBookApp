@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import {passwordreset} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
-
+import { withRouter } from 'react-router';
 
 class PasswordReset extends Component {
     constructor(props){
@@ -49,7 +49,7 @@ class PasswordReset extends Component {
             <React.Fragment>
                 <Header />
                 <br/>
-                <div className="center">
+                <div className="center marginTop100px">
                     家計簿アプリに登録済みのメールアドレスを入力してください。<br/>
                     パスワード再設定用のURLをお送りします。
                     <div>
@@ -78,6 +78,6 @@ const validate = values => {
 
 const mapDispatchToProps = ({passwordreset })
 
-export default connect(null, mapDispatchToProps)(
+export default withRouter(connect(null, mapDispatchToProps)(
     reduxForm({ validate,form: "logincompany" })(PasswordReset)
-)
+))

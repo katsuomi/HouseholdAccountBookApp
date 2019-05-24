@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { withRouter } from 'react-router';
 
 
 class LoginUser extends Component {
@@ -22,7 +23,7 @@ class LoginUser extends Component {
         let email = values.email;
         let password = values.password;
         await this.props.loginuser(email,password)
-        this.props.history.push("/")
+        await this.props.history.push("/")
     }
 
 
@@ -120,6 +121,6 @@ const validate = values => {
 
 const mapDispatchToProps = ({loginuser })
 
-export default connect(null, mapDispatchToProps)(
+export default withRouter(connect(null, mapDispatchToProps)(
     reduxForm({ validate,form: "loginuser" })(LoginUser)
-)
+))

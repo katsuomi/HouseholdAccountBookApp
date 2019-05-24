@@ -4,6 +4,7 @@ import {  MenuItem } from 'material-ui';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import {logout} from "../actions";
+import Icon from '@material-ui/core/Icon';
 
 
 class AuthButtons extends Component {
@@ -20,15 +21,17 @@ class AuthButtons extends Component {
         const props = this.props
         return (
             <div>
-                <Link to="/" className="text_decoration_none"><MenuItem>ホーム</MenuItem></Link>
+                <Link to="/" className="text_decoration_none">
+                    <MenuItem><Icon>home</Icon>ホーム</MenuItem>
+                </Link>
                 {props.uid ? 
                     <div>
-                        <MenuItem onClick={this.logout}>ログアウト</MenuItem>     
+                        <MenuItem onClick={this.logout}><Icon>trending_down</Icon>ログアウト</MenuItem>     
                     </div>
                 :
                     <div>
-                        <Link to="/login_user" className="text_decoration_none"><MenuItem>ログイン</MenuItem></Link>
-                        <Link to="/signup_user" className="text_decoration_none"><MenuItem>新規登録</MenuItem></Link>
+                        <Link to="/login_user" className="text_decoration_none"><MenuItem><Icon>trending_up</Icon>ログイン</MenuItem></Link>
+                        <Link to="/signup_user" className="text_decoration_none"><MenuItem><Icon>open_in_new</Icon>新規登録</MenuItem></Link>
                     </div>
                 }
             </div>
