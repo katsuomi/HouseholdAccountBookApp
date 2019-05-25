@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from "../presentationalComponents/Header";
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
-import {loginuser} from "../actions";
+import {loginUser} from "../actions";
 import {Link} from "react-router-dom";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
@@ -22,7 +22,7 @@ class LoginUser extends Component {
     async SubmitLogin(values){
         let email = values.email;
         let password = values.password;
-        await this.props.loginuser(email,password)
+        await this.props.loginUser(email,password)
         await this.props.history.push("/")
     }
 
@@ -70,7 +70,6 @@ class LoginUser extends Component {
 
     render() {
         const { handleSubmit,pristine,submitting } = this.props 
-        const props = this.props
         return (
             <React.Fragment>
                 <Header />
@@ -119,7 +118,7 @@ const validate = values => {
     return errors
 }
 
-const mapDispatchToProps = ({loginuser })
+const mapDispatchToProps = ({loginUser })
 
 export default withRouter(connect(null, mapDispatchToProps)(
     reduxForm({ validate,form: "loginuser" })(LoginUser)

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Header from "../presentationalComponents/Header";
 import { Field, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
-import {passwordreset} from "../actions";
+import {passwordReset} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
@@ -16,7 +16,7 @@ class PasswordReset extends Component {
 
     async SubmitPasswordReset(values){
         let email = values.email;
-        await this.props.passwordreset(email)
+        await this.props.passwordReset(email)
         this.props.history.push("/")
     }
 
@@ -44,7 +44,6 @@ class PasswordReset extends Component {
 
     render() {
         const { handleSubmit,pristine,submitting } = this.props 
-        const props = this.props
         return (
             <React.Fragment>
                 <Header />
@@ -76,7 +75,7 @@ const validate = values => {
     return errors
 }
 
-const mapDispatchToProps = ({passwordreset })
+const mapDispatchToProps = ({passwordReset })
 
 export default withRouter(connect(null, mapDispatchToProps)(
     reduxForm({ validate,form: "logincompany" })(PasswordReset)

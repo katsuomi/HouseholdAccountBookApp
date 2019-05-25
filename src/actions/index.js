@@ -4,9 +4,10 @@ export const SIGNUP_USER = 'SIGNUP_USER'
 export const LOGIN_USER = 'LOGIN_USER'
 export const PASS_WORD_RESET = 'PASS_WORD_RESET'
 export const LOGOUT = 'LOGOUT'
+export const READ_CURRENT_USER = 'READ_CURRENT_USER'
 
 
-export const signupuser = (email,password) => async dispatch => {
+export const signupUser = (email,password) => async dispatch => {
   firebase.auth().createUserWithEmailAndPassword(email, password)
   .then(user => {
     console.log("SUCCESS")
@@ -26,7 +27,7 @@ export const signupuser = (email,password) => async dispatch => {
   });
 }
 
-export const loginuser = (email,password) => async dispatch => {
+export const loginUser = (email,password) => async dispatch => {
   firebase.auth().signInWithEmailAndPassword(email, password)
   .then(user => {
     console.log("SUCCESS")
@@ -55,11 +56,21 @@ export const logout = () => async dispatch => {
   dispatch({type: LOGOUT,uid: ""})
 }
 
-export const passwordreset = (email) => async dispatch => {  
+export const passwordReset = (email) => async dispatch => {  
   firebase.auth().sendPasswordResetEmail(email).then(function() {
     console.log("成功")
   }).catch(function(error) {
     console.log(error)
   });
   dispatch({type: PASS_WORD_RESET})
+}
+
+export const readCurrentUser = () => async dispatch => {  
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      dispatch({type: READ_CURRENT_USER,uid: firebase.auth().currentUser.uid })
+    } else {
+      dispatch({type: READ_CURRENT_USER,uid: ""})
+    }
+  });
 }

@@ -1,5 +1,5 @@
 import {
-    SIGNUP_USER,LOGIN_USER,LOGOUT,PASS_WORD_RESET
+    SIGNUP_USER,LOGIN_USER,LOGOUT,PASS_WORD_RESET,READ_CURRENT_USER
 } from '../actions'
 
   
@@ -18,9 +18,13 @@ export default (state = initialState, action) => {
                 currentuser_uid: action.uid,
             }
         case LOGOUT:
-        return {
-            currentuser_uid: action.uid,
-        }
+            return {
+                currentuser_uid: action.uid,
+            }
+        case READ_CURRENT_USER:
+            return {
+                currentuser_uid: action.uid
+            }
         case PASS_WORD_RESET:
             return state
         default:

@@ -36,6 +36,7 @@ class Header extends Component {
                     <AppBar
                     title="家計簿アプリ"
                     onLeftIconButtonClick={this.handleToggle}
+                    color="default"
                     />
                 </div>
             </MuiThemeProvider>
