@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AuthButtons from "../components/AuthButtons"
 import { AppBar, Drawer } from 'material-ui';
-
+import CurrentUserEmail from "../components/CurrentUserEmail"
 
 class Header extends Component {
     constructor() {
@@ -37,7 +37,9 @@ class Header extends Component {
                     title="家計簿アプリ"
                     onLeftIconButtonClick={this.handleToggle}
                     color="default"
-                    />
+                    >
+                        <CurrentUserEmail />
+                    </AppBar>
                 </div>
             </MuiThemeProvider>
         );

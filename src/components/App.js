@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Header from "../presentationalComponents/Header";
 import Grid from '@material-ui/core/Grid';
-import {Link} from "react-router-dom";
 import { connect } from 'react-redux';
 import LoginUser from './LoginUser';
+import SubmitExpend from './SubmitExpend';
 import {readCurrentUser} from "../actions";
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
         {this.props.uid ? 
           <div>
             <Header />
-            <div className="mainColor">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</div>
+            <SubmitExpend />
           </div>
         :
           <div>

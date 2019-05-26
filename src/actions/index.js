@@ -5,10 +5,10 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const PASS_WORD_RESET = 'PASS_WORD_RESET'
 export const LOGOUT = 'LOGOUT'
 export const READ_CURRENT_USER = 'READ_CURRENT_USER'
-
+export const SUBMIT_EXPEND = 'SUBMIT_EXPEND'
 
 export const signupUser = (email,password) => async dispatch => {
-  firebase.auth().createUserWithEmailAndPassword(email, password)
+  await firebase.auth().createUserWithEmailAndPassword(email, password)
   .then(user => {
     console.log("SUCCESS")
   }, err => {
@@ -16,7 +16,7 @@ export const signupUser = (email,password) => async dispatch => {
     alert("新規登録できませんでした。")
   });
 
-  firebase.auth().onAuthStateChanged(function(user) {
+  await firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       let data = { email: user.email }
       db.collection('users').doc(user.uid).set(data);
@@ -28,7 +28,7 @@ export const signupUser = (email,password) => async dispatch => {
 }
 
 export const loginUser = (email,password) => async dispatch => {
-  firebase.auth().signInWithEmailAndPassword(email, password)
+  await firebase.auth().signInWithEmailAndPassword(email, password)
   .then(user => {
     console.log("SUCCESS")
   }, err => {
@@ -36,7 +36,7 @@ export const loginUser = (email,password) => async dispatch => {
     alert("ログインできませんでした。")
   });
 
-  firebase.auth().onAuthStateChanged(function(user) {
+  await firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
       dispatch({type: LOGIN_USER,uid: firebase.auth().currentUser.uid })
     } else {
@@ -47,7 +47,7 @@ export const loginUser = (email,password) => async dispatch => {
 }
 
 export const logout = () => async dispatch => {
-  firebase.auth().signOut()
+  await firebase.auth().signOut()
   .then(_ => {
     console.log("SUCCESS")
   }, err => {
@@ -57,7 +57,7 @@ export const logout = () => async dispatch => {
 }
 
 export const passwordReset = (email) => async dispatch => {  
-  firebase.auth().sendPasswordResetEmail(email).then(function() {
+  await firebase.auth().sendPasswordResetEmail(email).then(function() {
     console.log("成功")
   }).catch(function(error) {
     console.log(error)
@@ -66,11 +66,21 @@ export const passwordReset = (email) => async dispatch => {
 }
 
 export const readCurrentUser = () => async dispatch => {  
-  firebase.auth().onAuthStateChanged(function(user) {
+  await firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      dispatch({type: READ_CURRENT_USER,uid: firebase.auth().currentUser.uid })
+      dispatch({type: READ_CURRENT_USER,uid: firebase.auth().currentUser.uid,email: firebase.auth().currentUser.email })
     } else {
       dispatch({type: READ_CURRENT_USER,uid: ""})
     }
   });
+}
+
+export const submitExpend = (expend,categoli) => async dispatch => {  
+  expend = Number(expend)
+  let data = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
+  await db.collection('expends').doc().set(data)
+  await db.collection('categoli').doc().set(data)
+  dispatch({type: SUBMIT_EXPEND})
+
+
 }

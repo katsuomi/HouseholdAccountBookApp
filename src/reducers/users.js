@@ -4,7 +4,8 @@ import {
 
   
 const initialState = { 
-    currentuser_uid: ""
+    currentuser_uid: "",
+    currentuser_email: ""
 }
   
 export default (state = initialState, action) => {
@@ -23,7 +24,7 @@ export default (state = initialState, action) => {
             }
         case READ_CURRENT_USER:
             return {
-                currentuser_uid: action.uid
+                currentuser_uid: action.uid,currentuser_email: action.email
             }
         case PASS_WORD_RESET:
             return state
