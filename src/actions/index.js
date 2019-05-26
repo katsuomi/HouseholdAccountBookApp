@@ -6,6 +6,7 @@ export const PASS_WORD_RESET = 'PASS_WORD_RESET'
 export const LOGOUT = 'LOGOUT'
 export const READ_CURRENT_USER = 'READ_CURRENT_USER'
 export const SUBMIT_EXPEND = 'SUBMIT_EXPEND'
+export const SEARCH_CATEGOLI = 'SEARCH_CATEGOLI'
 
 export const signupUser = (email,password) => async dispatch => {
   await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -20,7 +21,7 @@ export const signupUser = (email,password) => async dispatch => {
     if (user) {
       let data = { email: user.email }
       db.collection('users').doc(user.uid).set(data);
-      dispatch({type: SIGNUP_USER,uid: firebase.auth().currentUser.uid })
+      dispatch({type: SIGNUP_USER,uid: firebase.auth().currentUser.uid,email: firebase.auth().currentUser.email })
     } else {
       dispatch({type: SIGNUP_USER,uid: ""})
     }
@@ -38,7 +39,7 @@ export const loginUser = (email,password) => async dispatch => {
 
   await firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      dispatch({type: LOGIN_USER,uid: firebase.auth().currentUser.uid })
+      dispatch({type: LOGIN_USER,uid: firebase.auth().currentUser.uid,email: firebase.auth().currentUser.email })
     } else {
       dispatch({type: LOGIN_USER,uid: ""})
     }
@@ -77,10 +78,24 @@ export const readCurrentUser = () => async dispatch => {
 
 export const submitExpend = (expend,categoli) => async dispatch => {  
   expend = Number(expend)
-  let data = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
-  await db.collection('expends').doc().set(data)
-  await db.collection('categoli').doc().set(data)
+  let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
+  // let data_categolies = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
+  await db.collection('expends').doc().set(data_expends)
+  // await db.collection('categolies').doc().set(data_categolies)
   dispatch({type: SUBMIT_EXPEND})
+}
 
-
+export const searchCategoli = (categoli_value) => async dispatch => {  
+  await db.collection("expends").where("categoli", "==", categoli_value)
+  .get()
+  .then(querySnapshot => {
+    if(querySnapshot.size == 0){
+      dispatch({type: SEARCH_CATEGOLI})
+    }else{
+      dispatch({type: SEARCH_CATEGOLI,result: categoli_value})
+    }
+  })
+  .catch(function(error) {
+    dispatch({type: SEARCH_CATEGOLI})
+  });
 }

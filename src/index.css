@@ -37,3 +37,9 @@ body {
 .mainColor{
   color: rgb(15, 185, 207)
 }
+
+@media screen and (max-width:600px){
+  .none-xs{
+    display: none;
+  }
+}

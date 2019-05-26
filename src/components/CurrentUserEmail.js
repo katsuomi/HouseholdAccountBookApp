@@ -18,7 +18,7 @@ class CurrentUserEmail extends Component {
         return (
             <React.Fragment>
                 {this.props.email ?
-                    <div style={{position: "absolute",top: "20px",right: "0"}}><span className="bold">{this.props.email}</span>でログイン中</div>                
+                    <div className="none-xs" style={{position: "absolute",top: "20px",right: "0"}}><span className="bold">{this.props.email}</span>でログイン中</div>                
                 :
                     <div></div>
                 }

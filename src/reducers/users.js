@@ -12,11 +12,11 @@ export default (state = initialState, action) => {
     switch (action.type){
         case SIGNUP_USER:
             return {
-                currentuser_uid: action.uid,
+                currentuser_uid: action.uid,currentuser_email: action.email
             }
         case LOGIN_USER:
             return {
-                currentuser_uid: action.uid,
+                currentuser_uid: action.uid,currentuser_email: action.email
             }
         case LOGOUT:
             return {

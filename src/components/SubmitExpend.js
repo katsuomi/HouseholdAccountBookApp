@@ -4,28 +4,29 @@ import {submitExpend} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
+import {searchCategoli} from "../actions";
+
 
 class SubmitExpend extends Component {
     constructor(props){
         super(props)
         this.SubmitExpend = this.SubmitExpend.bind(this);
-        this.onChangeExpendValue = this.onChangeExpendValue.bind(this);
         this.onChangeCategoliValue = this.onChangeCategoliValue.bind(this);
+        this.state={categoli_value: ""}
     }
 
-    onChangeExpendValue(e){
-        e.preventDefault();
-    }   
-
     onChangeCategoliValue(e){
-        e.preventDefault();
+        if(e.target.value){
+            e.preventDefault();
+            this.props.searchCategoli(e.target.value)
+            this.setState({categoli_value: e.target.value})
+        }
     }   
 
 
-    async SubmitExpend(e){
-        let expend = e.target.expend.value
-        let categoli = e.target.categoli.value
-        await this.props.submitExpend(expend,categoli)
+    SubmitExpend(e){
+        e.preventDefault()
+        this.props.submitExpend(e.target.expend.value,e.target.categoli.value)
         e.target.expend.value = '';
         e.target.categoli.value = '';
     }
@@ -37,12 +38,17 @@ class SubmitExpend extends Component {
                 <div className="center">
                     <form onSubmit={this.SubmitExpend}>
                         <br/>
-                        <TextField label="支出金額"  name="expend" onChange={this.onChangeExpendValue} type="number" required />
+                        <TextField label="支出金額"  name="expend" type="number" required />
                         <br/>
                         <br/>
                         <TextField label="カテゴリー" name="categoli" type="text" onChange={this.onChangeCategoliValue} required />
                         <br/>
                         <br/>
+                        {this.props.result ? 
+                            <p>カテゴリー<b>「{this.props.result}」</b>は存在しています。そちらに支出を追加します。</p>
+                        :
+                            <p style={{display: this.state.categoli_value ? "" : "none"}}>カテゴリー「{this.state.categoli_value}」は存在しません。新規に作成します。</p>
+                        }
                         <Button variant="contained" type="submit">
                             送信
                         </Button>
@@ -54,6 +60,8 @@ class SubmitExpend extends Component {
 }
 
 
-const mapDispatchToProps = ({submitExpend })
+const mapStateToProps = state => ({result: state.searches.result  })
 
-export default withRouter(connect(null, mapDispatchToProps)(SubmitExpend))
+const mapDispatchToProps = ({submitExpend,searchCategoli })
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitExpend))

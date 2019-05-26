@@ -21,7 +21,13 @@ class App extends Component {
         {this.props.uid ? 
           <div>
             <Header />
-            <SubmitExpend />
+            <Grid container>
+              <Grid item xs={12} sm={3}></Grid>
+              <Grid item xs={12} sm={6}>
+                <SubmitExpend />
+              </Grid>
+              <Grid item xs={12} sm={3}></Grid>
+            </Grid>
           </div>
         :
           <div>

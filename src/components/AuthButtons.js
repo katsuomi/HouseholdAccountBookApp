@@ -26,6 +26,7 @@ class AuthButtons extends Component {
                 </Link>
                 {props.uid ? 
                     <div>
+                        <MenuItem>{this.props.email}でログイン中</MenuItem>
                         <MenuItem onClick={this.logout}><Icon>trending_down</Icon>ログアウト</MenuItem>     
                     </div>
                 :
@@ -42,7 +43,7 @@ class AuthButtons extends Component {
 
 const mapDispatchToProps = ({ logout })
 
-const mapStateToProps = state => ({uid: state.users.currentuser_uid })
+const mapStateToProps = state => ({uid: state.users.currentuser_uid,email: state.users.currentuser_email })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthButtons))
 
