@@ -11,7 +11,12 @@ class SubmitExpend extends Component {
         super(props)
         this.SubmitExpend = this.SubmitExpend.bind(this);
         this.onChangeCategoliValue = this.onChangeCategoliValue.bind(this);
+        this.SubmitExpendNext = this.SubmitExpendNext.bind(this);
         this.state={categoli_value: ""}
+    }
+
+    componentDidMount(){
+        this.props.graph()
     }
 
     onChangeCategoliValue(e){
@@ -22,11 +27,17 @@ class SubmitExpend extends Component {
         }
     }   
 
+    async SubmitExpendNext(){
+        await this.props.graph()
+    }
+
 
     SubmitExpend(e){
         e.preventDefault()
-        this.props.submitExpend(e.target.expend.value,e.target.categoli.value)
-        this.props.graph()
+        const expend = e.target.expend.value
+        const categoli = e.target.categoli.value
+        this.props.submitExpend(expend,categoli)
+        setTimeout(this.SubmitExpendNext,1000);
         e.target.expend.value = '';
         e.target.categoli.value = '';
     }

@@ -10,15 +10,22 @@ class SubmitIncome extends Component {
     constructor(props){
         super(props)
         this.SubmitIncome = this.SubmitIncome.bind(this);
+        this.SubmitIncomeNext = this.SubmitIncomeNext.bind(this);
+    }
+
+    async SubmitIncomeNext(){
+        await this.props.graph()
     }
 
 
-    async SubmitIncome(e){
+    SubmitIncome(e){
         e.preventDefault()
-        this.props.submitIncome(e.target.income.value)
+        const income = e.target.income.value
+        this.props.submitIncome(income)
+        setTimeout(this.SubmitIncomeNext,1000);
         e.target.income.value = '';
-        this.props.graph()
     }
+
 
     render() {
         return (

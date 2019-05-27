@@ -85,7 +85,7 @@ export const submitExpend = (expend,categoli) => async dispatch => {
   .get()
   .then(querySnapshot => {
     let data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size}
-    db.collection('graph_data').doc(String(querySnapshot.size)).set(data_expends_graph)
+    db.collection('graph_data').doc(String(new Date())).set(data_expends_graph)
   })
   await db.collection('expends').doc().set(data_expends)
   dispatch({type: SUBMIT_EXPEND})
@@ -98,7 +98,7 @@ export const submitIncome = (income) => async dispatch => {
   .get()
   .then(querySnapshot => {
     let data_incomes_graph = { categoli: "収入",amount: income,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size }
-    db.collection('graph_data').doc(String(querySnapshot.size)).set(data_incomes_graph)
+    db.collection('graph_data').doc(String(new Date())).set(data_incomes_graph)
   })
 
   await db.collection('incomes').doc().set(data_incomes)
