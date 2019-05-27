@@ -6,7 +6,9 @@ export const PASS_WORD_RESET = 'PASS_WORD_RESET'
 export const LOGOUT = 'LOGOUT'
 export const READ_CURRENT_USER = 'READ_CURRENT_USER'
 export const SUBMIT_EXPEND = 'SUBMIT_EXPEND'
+export const SUBMIT_INCOME = 'SUBMIT_INCOME'
 export const SEARCH_CATEGOLI = 'SEARCH_CATEGOLI'
+export const GRAPH = 'GRAPH'
 
 export const signupUser = (email,password) => async dispatch => {
   await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -78,12 +80,31 @@ export const readCurrentUser = () => async dispatch => {
 
 export const submitExpend = (expend,categoli) => async dispatch => {  
   expend = Number(expend)
-  let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
-  // let data_categolies = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid}
+  let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,created_at: new Date()}
+  db.collection('graph_data')
+  .get()
+  .then(querySnapshot => {
+    let data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size}
+    db.collection('graph_data').doc(String(querySnapshot.size)).set(data_expends_graph)
+  })
   await db.collection('expends').doc().set(data_expends)
-  // await db.collection('categolies').doc().set(data_categolies)
   dispatch({type: SUBMIT_EXPEND})
 }
+
+export const submitIncome = (income) => async dispatch => {  
+  income = Number(income)
+  let data_incomes = { income: income,user_id: firebase.auth().currentUser.uid,created_at: new Date()}
+  db.collection('graph_data')
+  .get()
+  .then(querySnapshot => {
+    let data_incomes_graph = { categoli: "収入",amount: income,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size }
+    db.collection('graph_data').doc(String(querySnapshot.size)).set(data_incomes_graph)
+  })
+
+  await db.collection('incomes').doc().set(data_incomes)
+  dispatch({type: SUBMIT_INCOME})
+}
+
 
 export const searchCategoli = (categoli_value) => async dispatch => {  
   await db.collection("expends").where("categoli", "==", categoli_value)
@@ -98,4 +119,29 @@ export const searchCategoli = (categoli_value) => async dispatch => {
   .catch(function(error) {
     dispatch({type: SEARCH_CATEGOLI})
   });
+}
+
+export const graph = () => async dispatch => {  
+  let results = []
+  await db.collection("graph_data").where("user_id","==",firebase.auth().currentUser.uid)
+  .get()
+  .then(function(querySnapshot){
+    querySnapshot.forEach(function(doc) {
+      results.push({categoli: doc.data().categoli,amount: doc.data().amount })
+    });
+  })
+  .catch(function(error) {
+  });
+
+  let graph_results =  [{"categoli": "",amount: 0}]
+  var amount = 0
+  results.map((result) => {
+    amount = amount + result.amount
+    graph_results.push({
+      categoli: result.categoli,
+      amount: amount 
+    })
+  })
+
+  dispatch({type: GRAPH,graph_results: graph_results})
 }

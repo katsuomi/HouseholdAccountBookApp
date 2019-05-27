@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {submitExpend} from "../actions";
+import {submitExpend,searchCategoli,graph} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
-import {searchCategoli} from "../actions";
 
 
 class SubmitExpend extends Component {
@@ -27,6 +26,7 @@ class SubmitExpend extends Component {
     SubmitExpend(e){
         e.preventDefault()
         this.props.submitExpend(e.target.expend.value,e.target.categoli.value)
+        this.props.graph()
         e.target.expend.value = '';
         e.target.categoli.value = '';
     }
@@ -62,6 +62,6 @@ class SubmitExpend extends Component {
 
 const mapStateToProps = state => ({result: state.searches.result  })
 
-const mapDispatchToProps = ({submitExpend,searchCategoli })
+const mapDispatchToProps = ({submitExpend,searchCategoli,graph })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitExpend))

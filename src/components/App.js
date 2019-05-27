@@ -4,7 +4,11 @@ import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import LoginUser from './LoginUser';
 import SubmitExpend from './SubmitExpend';
+import SubmitIncome from './SubmitIncome';
+import Graph from './Graph';
 import {readCurrentUser} from "../actions";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "react-tabs/style/react-tabs.css";
 
 class App extends Component {
   constructor(props){
@@ -24,9 +28,22 @@ class App extends Component {
             <Grid container>
               <Grid item xs={12} sm={3}></Grid>
               <Grid item xs={12} sm={6}>
-                <SubmitExpend />
+                <Tabs className="marginTop100px">
+                  <TabList>
+                    <Tab>収入を記入</Tab>
+                    <Tab>支出を記入</Tab>
+                  </TabList>
+
+                  <TabPanel>
+                    <SubmitIncome />
+                  </TabPanel>
+                  <TabPanel>
+                    <SubmitExpend />
+                  </TabPanel>
+                </Tabs>
               </Grid>
               <Grid item xs={12} sm={3}></Grid>
+              <Graph />
             </Grid>
           </div>
         :
