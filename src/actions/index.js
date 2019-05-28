@@ -17,6 +17,8 @@ export const READ_EXPENDS = 'READ_EXPENDS'
 export const READ_NEWS = 'READ_NEWS'
 export const DELETE_INCOME = "DELETE_INCOME"
 export const DELETE_EXPEND = "DELETE_EXPEND"
+export const UPDATE_INCOME = "UPDATE_INCOME"
+export const UPDATE_EXPEND = "UPDATE_EXPEND"
 
 
 
@@ -269,4 +271,53 @@ export const deleteExpend = (id) => async dispatch => {
   });
 
   dispatch({type: DELETE_EXPEND})
+}
+
+
+export const updateIncome = (income,categoli,id) => async dispatch => {  
+  await db.collection("incomes").where("id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("incomes").doc(doc.id).update({income: Number(income),categoli: categoli})
+    });
+  })
+  .catch(function(error) {
+  });
+
+  await db.collection("graph_data").where("income_id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("graph_data").doc(doc.id).update({amount: Number(income)})
+    });
+  })
+  .catch(function(error) {
+  });
+
+  dispatch({type: UPDATE_INCOME})
+}
+
+export const updateExpend = (expend,categoli,id) => async dispatch => {  
+  await db.collection("expends").where("id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("expends").doc(doc.id).update({expend: Number(expend),categoli: categoli})
+    });
+  })
+  .catch(function(error) {
+  });
+
+  await db.collection("graph_data").where("expend_id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("graph_data").doc(doc.id).update({amount: -Number(expend)})
+    });
+  })
+  .catch(function(error) {
+  });
+
+  dispatch({type: UPDATE_EXPEND})
 }
