@@ -5,10 +5,14 @@ import { connect } from 'react-redux';
 import LoginUser from './LoginUser';
 import SubmitExpend from './SubmitExpend';
 import SubmitIncome from './SubmitIncome';
+import ReadIncomes from './ReadIncomes';
+import ReadExpends from './ReadExpends';
+import ReadNews from './ReadNews';
 import Graph from './Graph';
 import {readCurrentUser} from "../actions";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import "react-tabs/style/react-tabs.css";
+
 
 class App extends Component {
   constructor(props){
@@ -25,15 +29,15 @@ class App extends Component {
         {this.props.uid ? 
           <div>
             <Header />
+            <h2 style={{marginLeft: "90px"}}>{new Date().getFullYear()}年{new Date().getMonth()+1}月</h2>
             <Grid container>
-              <Grid item xs={12} sm={3}></Grid>
-              <Grid item xs={12} sm={6}>
-                <Tabs className="marginTop100px">
+              <Grid item xs={12} sm={2}></Grid> 
+              <Grid item xs={12} sm={4}>
+                <Tabs>
                   <TabList>
                     <Tab>収入を記入</Tab>
                     <Tab>支出を記入</Tab>
                   </TabList>
-
                   <TabPanel>
                     <SubmitIncome />
                   </TabPanel>
@@ -42,8 +46,23 @@ class App extends Component {
                   </TabPanel>
                 </Tabs>
               </Grid>
-              <Grid item xs={12} sm={3}></Grid>
-              <Graph />
+              <Grid item xs={12} sm={6}>
+                <Graph />
+              </Grid>
+              <Grid item xs={12} sm={12} md={3}></Grid> 
+              <Grid item xs={12} sm={12} md={6}>
+                <br/>
+                <ReadIncomes />
+                <br/>
+                <ReadExpends />
+              </Grid>
+              <Grid item xs={12} sm={12} md={3}></Grid> 
+
+              <Grid item xs={12} sm={12} md={3}></Grid> 
+              <Grid item xs={12} sm={12} md={6}>
+                <ReadNews  />
+              </Grid>
+              <Grid item xs={12} sm={12} md={3}></Grid> 
             </Grid>
           </div>
         :

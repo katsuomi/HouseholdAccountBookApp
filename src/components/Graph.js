@@ -17,13 +17,16 @@ class Graph extends Component {
 
     render(){
     return (
-        <LineChart  width={300} height={300} data={this.props.graph_results} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
+        <React.Fragment>
+        <h2 style={{marginLeft: "90px"}}>収支グラフ</h2>
+        <LineChart  width={340} height={300} data={this.props.graph_results} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
             <XAxis dataKey="categoli" />
             <YAxis/>
             <CartesianGrid stroke="#eee" strokeDasharray="5 5"/>
             <Tooltip />
             <Line type="monotone" dataKey="amount" stroke="rgb(15, 185, 207)" />
         </LineChart>
+        </React.Fragment>
     )
   }
 }
