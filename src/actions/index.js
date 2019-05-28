@@ -125,7 +125,7 @@ export const submitIncome = (income,categoli) => async dispatch => {
 
 
 export const searchExpendsCategoli = (categoli_value) => async dispatch => {  
-  await db.collection("expends").where("categoli", "==", categoli_value)
+  await db.collection("expends").where("categoli", "==", categoli_value).where("user_id","==",firebase.auth().currentUser.uid)
   .get()
   .then(querySnapshot => {
     if(querySnapshot.size == 0){
@@ -141,7 +141,7 @@ export const searchExpendsCategoli = (categoli_value) => async dispatch => {
 
 
 export const searchIncomesCategoli = (categoli_value) => async dispatch => {  
-  await db.collection("incomes").where("categoli", "==", categoli_value)
+  await db.collection("incomes").where("categoli", "==", categoli_value).where("user_id","==",firebase.auth().currentUser.uid)
   .get()
   .then(querySnapshot => {
     if(querySnapshot.size == 0){
@@ -289,7 +289,7 @@ export const updateIncome = (income,categoli,id) => async dispatch => {
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).update({amount: Number(income)})
+      db.collection("graph_data").doc(doc.id).update({amount: Number(income),categoli: categoli})
     });
   })
   .catch(function(error) {
@@ -313,7 +313,7 @@ export const updateExpend = (expend,categoli,id) => async dispatch => {
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).update({amount: -Number(expend)})
+      db.collection("graph_data").doc(doc.id).update({amount: -Number(expend),categoli: categoli})
     });
   })
   .catch(function(error) {

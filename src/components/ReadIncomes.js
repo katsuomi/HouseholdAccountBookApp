@@ -74,6 +74,7 @@ class ReadIncomes extends Component {
         const categoli = e.target.categoli.value
         this.props.updateIncome(income,categoli,this.state.id)
         setTimeout(this.UpdateIncomeNext,1000);
+        this.setState({open: false})
     }
 
 
