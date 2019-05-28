@@ -55,9 +55,9 @@ class SubmitIncome extends Component {
                         <br/>
                         <br/>
                         {this.props.result ? 
-                            <p>カテゴリー<b>「{this.props.result}」</b>は存在しています。そちらに収入を追加します。</p>
+                            <p>収入カテゴリー<b>「{this.props.result}」</b>は存在しています。そちらに収入を追加します。</p>
                         :
-                            <p style={{display: this.state.categoli_value ? "" : "none"}}>カテゴリー「{this.state.categoli_value}」は存在しません。新規に作成します。</p>
+                            <p style={{display: this.state.categoli_value ? "" : "none"}}>収入カテゴリー「{this.state.categoli_value}」は存在しません。新規に作成します。</p>
                         }
                         <Button variant="contained" type="submit">
                             送信

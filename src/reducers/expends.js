@@ -1,5 +1,5 @@
 import {
-    SUBMIT_EXPEND,READ_EXPENDS
+    SUBMIT_EXPEND,READ_EXPENDS,DELETE_EXPEND
 } from '../actions'
 
   
@@ -13,6 +13,8 @@ export default (state = initialState, action) => {
             return {
                 your_expends: action.your_expends
             }
+        case DELETE_EXPEND:
+            return state
         default:
             return state
     }

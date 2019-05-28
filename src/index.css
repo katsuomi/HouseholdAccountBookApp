@@ -44,3 +44,7 @@ body {
 .mainColor{
   color: rgb(15, 185, 207)
 }
+
+.pointer{
+  cursor: pointer;
+}

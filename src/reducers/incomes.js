@@ -1,5 +1,5 @@
 import {
-    SUBMIT_INCOME,READ_INCOMES
+    SUBMIT_INCOME,READ_INCOMES,DELETE_INCOME
 } from '../actions'
 
   
@@ -13,6 +13,8 @@ export default (state = initialState, action) => {
             return {
                 your_incomes: action.your_incomes
             }
+        case DELETE_INCOME:
+            return state
         default:
             return state
     }

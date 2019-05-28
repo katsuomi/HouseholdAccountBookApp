@@ -15,6 +15,8 @@ export const GRAPH = 'GRAPH'
 export const READ_INCOMES = 'READ_INCOMES'
 export const READ_EXPENDS = 'READ_EXPENDS'
 export const READ_NEWS = 'READ_NEWS'
+export const DELETE_INCOME = "DELETE_INCOME"
+export const DELETE_EXPEND = "DELETE_EXPEND"
 
 
 
@@ -90,29 +92,32 @@ export const readCurrentUser = () => async dispatch => {
 export const submitExpend = (expend,categoli) => async dispatch => {  
   expend = Number(expend)
   let Today = String(new Date().getFullYear())+"年"+String(new Date().getMonth()+1)+"月"+String(new Date().getDate())+"日"
-  let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,created_at: Today}
-  db.collection('graph_data')
+
+  await db.collection('expends')
   .get()
   .then(querySnapshot => {
-    let data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size}
+    let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
+    let data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,expend_id: querySnapshot.size}
+    db.collection('expends').doc(String(new Date())).set(data_expends)
     db.collection('graph_data').doc(String(new Date())).set(data_expends_graph)
   })
-  await db.collection('expends').doc(String(new Date())).set(data_expends)
+
   dispatch({type: SUBMIT_EXPEND})
 }
 
 export const submitIncome = (income,categoli) => async dispatch => {  
   income = Number(income)
   let Today = String(new Date().getFullYear())+"年"+String(new Date().getMonth()+1)+"月"+String(new Date().getDate())+"日"
-  let data_incomes = { categoli: categoli,income: income,user_id: firebase.auth().currentUser.uid,created_at: Today}
-  db.collection('graph_data')
+
+  await db.collection('incomes')
   .get()
   .then(querySnapshot => {
-    let data_incomes_graph = { categoli: categoli,amount: income,user_id: firebase.auth().currentUser.uid,id: querySnapshot.size }
+    let data_incomes = { categoli: categoli,income: income,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
+    let data_incomes_graph = { categoli: categoli,amount: income,user_id: firebase.auth().currentUser.uid,income_id: querySnapshot.size }
+    db.collection('incomes').doc(String(new Date())).set(data_incomes)
     db.collection('graph_data').doc(String(new Date())).set(data_incomes_graph)
   })
 
-  await db.collection('incomes').doc(String(new Date())).set(data_incomes)
   dispatch({type: SUBMIT_INCOME})
 }
 
@@ -181,7 +186,7 @@ export const readIncomes = () => async dispatch => {
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      your_incomes.push({categoli: doc.data().categoli,income: doc.data().income,created_at: doc.data().created_at })
+      your_incomes.push({categoli: doc.data().categoli,income: doc.data().income,created_at: doc.data().created_at,id: doc.data().id })
     });
   })
   .catch(function(error) {
@@ -196,7 +201,7 @@ export const readExpends = () => async dispatch => {
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      your_expends.push({categoli: doc.data().categoli,expend: doc.data().expend,created_at: doc.data().created_at })
+      your_expends.push({categoli: doc.data().categoli,expend: doc.data().expend,created_at: doc.data().created_at,id: doc.data().id })
     });
   })
   .catch(function(error) {
@@ -216,4 +221,52 @@ export const readNews = () => async dispatch => {
   .catch(error => {
   });
   dispatch({type: READ_NEWS,news: news})
+}
+
+export const deleteIncome = (id) => async dispatch => {  
+  await db.collection("incomes").where("id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("incomes").doc(doc.id).delete()
+    });
+  })
+  .catch(function(error) {
+  });
+
+  await db.collection("graph_data").where("income_id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("graph_data").doc(doc.id).delete()
+    });
+  })
+  .catch(function(error) {
+  });
+
+  dispatch({type: DELETE_INCOME})
+}
+
+export const deleteExpend = (id) => async dispatch => {  
+  await db.collection("expends").where("id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("expends").doc(doc.id).delete()
+    });
+  })
+  .catch(function(error) {
+  });
+
+  await db.collection("graph_data").where("expend_id", "==",id)
+  .get()
+  .then(querySnapshot => {
+    querySnapshot.forEach(function(doc){
+      db.collection("graph_data").doc(doc.id).delete()
+    });
+  })
+  .catch(function(error) {
+  });
+
+  dispatch({type: DELETE_EXPEND})
 }
