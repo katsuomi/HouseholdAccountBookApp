@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {submitExpend,searchCategoli,graph} from "../actions";
+import {submitExpend,searchExpendsCategoli,graph,readExpends} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
@@ -22,13 +22,14 @@ class SubmitExpend extends Component {
     onChangeCategoliValue(e){
         if(e.target.value){
             e.preventDefault();
-            this.props.searchCategoli(e.target.value)
+            this.props.searchExpendsCategoli(e.target.value)
             this.setState({categoli_value: e.target.value})
         }
     }   
 
     async SubmitExpendNext(){
         await this.props.graph()
+        await this.props.readExpends()
     }
 
 
@@ -49,10 +50,10 @@ class SubmitExpend extends Component {
                 <div className="center">
                     <form onSubmit={this.SubmitExpend}>
                         <br/>
-                        <TextField label="支出金額"  name="expend" type="number" required />
-                        <br/>
-                        <br/>
                         <TextField label="カテゴリー" name="categoli" type="text" onChange={this.onChangeCategoliValue} required />
+                        <br/>
+                        <br/>
+                        <TextField label="支出金額"  name="expend" type="number" required />
                         <br/>
                         <br/>
                         {this.props.result ? 
@@ -73,6 +74,6 @@ class SubmitExpend extends Component {
 
 const mapStateToProps = state => ({result: state.searches.result  })
 
-const mapDispatchToProps = ({submitExpend,searchCategoli,graph })
+const mapDispatchToProps = ({submitExpend,searchExpendsCategoli,graph,readExpends })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitExpend))
