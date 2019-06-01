@@ -11,7 +11,7 @@ export const SUBMIT_EXPEND = 'SUBMIT_EXPEND'
 export const SUBMIT_INCOME = 'SUBMIT_INCOME'
 export const SEARCH_EXPENDS_CATEGOLI = 'SEARCH_EXPENDS_CATEGOLI'
 export const SEARCH_INCOMES_CATEGOLI = 'SEARCH_INCOMES_CATEGOLI'
-export const GRAPH = 'GRAPH'
+export const READ_GRAPH = 'READ_GRAPH'
 export const READ_INCOMES = 'READ_INCOMES'
 export const READ_EXPENDS = 'READ_EXPENDS'
 export const READ_NEWS = 'READ_NEWS'
@@ -94,15 +94,23 @@ export const readCurrentUser = () => async dispatch => {
 export const submitExpend = (expend,categoli) => async dispatch => {  
   expend = Number(expend)
   let Today = String(new Date().getFullYear())+"年"+String(new Date().getMonth()+1)+"月"+String(new Date().getDate())+"日"
-
-  await db.collection('expends')
+  let data_expends = {}
+  let data_expends_graph = {}
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends")
   .get()
   .then(querySnapshot => {
-    let data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
-    let data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,expend_id: querySnapshot.size}
-    db.collection('expends').doc(String(new Date())).set(data_expends)
-    db.collection('graph_data').doc(String(new Date())).set(data_expends_graph)
+    data_expends = { expend: expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
+    data_expends_graph = { amount: -expend,categoli: categoli,user_id: firebase.auth().currentUser.uid,expend_id: querySnapshot.size}
+    db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").doc().set(data_expends)
   })
+
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph")
+  .get()
+  .then(querySnapshot => {
+    data_expends_graph.id = querySnapshot.size;
+    db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc().set(data_expends_graph)
+  })
+
 
   dispatch({type: SUBMIT_EXPEND})
 }
@@ -110,14 +118,21 @@ export const submitExpend = (expend,categoli) => async dispatch => {
 export const submitIncome = (income,categoli) => async dispatch => {  
   income = Number(income)
   let Today = String(new Date().getFullYear())+"年"+String(new Date().getMonth()+1)+"月"+String(new Date().getDate())+"日"
-
-  await db.collection('incomes')
+  let data_incomes = {}
+  let data_incomes_graph = {}
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes")
   .get()
   .then(querySnapshot => {
-    let data_incomes = { categoli: categoli,income: income,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
-    let data_incomes_graph = { categoli: categoli,amount: income,user_id: firebase.auth().currentUser.uid,income_id: querySnapshot.size }
-    db.collection('incomes').doc(String(new Date())).set(data_incomes)
-    db.collection('graph_data').doc(String(new Date())).set(data_incomes_graph)
+    data_incomes = { categoli: categoli,income: income,user_id: firebase.auth().currentUser.uid,created_at: Today,id: querySnapshot.size}
+    data_incomes_graph = { categoli: categoli,amount: income,user_id: firebase.auth().currentUser.uid,income_id: querySnapshot.size }
+    db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").doc().set(data_incomes)
+  })
+
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph")
+  .get()
+  .then(querySnapshot => {
+    data_incomes_graph.id = querySnapshot.size;
+    db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc().set(data_incomes_graph)
   })
 
   dispatch({type: SUBMIT_INCOME})
@@ -125,7 +140,7 @@ export const submitIncome = (income,categoli) => async dispatch => {
 
 
 export const searchExpendsCategoli = (categoli_value) => async dispatch => {  
-  await db.collection("expends").where("categoli", "==", categoli_value).where("user_id","==",firebase.auth().currentUser.uid)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").where("categoli", "==", categoli_value)
   .get()
   .then(querySnapshot => {
     if(querySnapshot.size == 0){
@@ -141,7 +156,7 @@ export const searchExpendsCategoli = (categoli_value) => async dispatch => {
 
 
 export const searchIncomesCategoli = (categoli_value) => async dispatch => {  
-  await db.collection("incomes").where("categoli", "==", categoli_value).where("user_id","==",firebase.auth().currentUser.uid)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").where("categoli", "==", categoli_value)
   .get()
   .then(querySnapshot => {
     if(querySnapshot.size == 0){
@@ -156,9 +171,9 @@ export const searchIncomesCategoli = (categoli_value) => async dispatch => {
 }
 
 
-export const graph = () => async dispatch => {  
+export const readGraph = () => async dispatch => {  
   let results = []
-  await db.collection("graph_data").where("user_id","==",firebase.auth().currentUser.uid)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").orderBy("id")
   .get()
   .then(function(querySnapshot){
     querySnapshot.forEach(function(doc) {
@@ -178,13 +193,13 @@ export const graph = () => async dispatch => {
     })
   })
 
-  dispatch({type: GRAPH,graph_results: graph_results})
+  dispatch({type: READ_GRAPH,graph_results: graph_results})
 }
 
 
 export const readIncomes = () => async dispatch => {  
   let your_incomes = []
-  await db.collection("incomes").where("user_id", "==", firebase.auth().currentUser.uid)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").orderBy("id")
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
@@ -199,7 +214,7 @@ export const readIncomes = () => async dispatch => {
 
 export const readExpends = () => async dispatch => {  
   let your_expends = []
-  await db.collection("expends").where("user_id", "==", firebase.auth().currentUser.uid)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").orderBy("id")
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
@@ -226,21 +241,21 @@ export const readNews = () => async dispatch => {
 }
 
 export const deleteIncome = (id) => async dispatch => {  
-  await db.collection("incomes").where("id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").where("id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("incomes").doc(doc.id).delete()
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").doc(doc.id).delete()
     });
   })
   .catch(function(error) {
   });
 
-  await db.collection("graph_data").where("income_id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").where("income_id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).delete()
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc(doc.id).delete()
     });
   })
   .catch(function(error) {
@@ -250,21 +265,21 @@ export const deleteIncome = (id) => async dispatch => {
 }
 
 export const deleteExpend = (id) => async dispatch => {  
-  await db.collection("expends").where("id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").where("id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("expends").doc(doc.id).delete()
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").doc(doc.id).delete()
     });
   })
   .catch(function(error) {
   });
 
-  await db.collection("graph_data").where("expend_id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").where("expend_id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).delete()
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc(doc.id).delete()
     });
   })
   .catch(function(error) {
@@ -275,7 +290,7 @@ export const deleteExpend = (id) => async dispatch => {
 
 
 export const updateIncome = (income,categoli,id) => async dispatch => {  
-  await db.collection("incomes").where("id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("incomes").where("id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
@@ -285,11 +300,11 @@ export const updateIncome = (income,categoli,id) => async dispatch => {
   .catch(function(error) {
   });
 
-  await db.collection("graph_data").where("income_id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").where("income_id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).update({amount: Number(income),categoli: categoli})
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc(doc.id).update({amount: Number(income),categoli: categoli})
     });
   })
   .catch(function(error) {
@@ -299,21 +314,21 @@ export const updateIncome = (income,categoli,id) => async dispatch => {
 }
 
 export const updateExpend = (expend,categoli,id) => async dispatch => {  
-  await db.collection("expends").where("id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").where("id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("expends").doc(doc.id).update({expend: Number(expend),categoli: categoli})
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("expends").doc(doc.id).update({expend: Number(expend),categoli: categoli})
     });
   })
   .catch(function(error) {
   });
 
-  await db.collection("graph_data").where("expend_id", "==",id)
+  await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").where("expend_id", "==",id)
   .get()
   .then(querySnapshot => {
     querySnapshot.forEach(function(doc){
-      db.collection("graph_data").doc(doc.id).update({amount: -Number(expend),categoli: categoli})
+      db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc(doc.id).update({amount: -Number(expend),categoli: categoli})
     });
   })
   .catch(function(error) {

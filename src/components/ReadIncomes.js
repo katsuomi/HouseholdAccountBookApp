@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {readIncomes,deleteIncome,graph,updateIncome} from "../actions";
+import {readIncomes,deleteIncome,readGraph,updateIncome} from "../actions";
 import { withRouter } from 'react-router';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -51,7 +51,7 @@ class ReadIncomes extends Component {
     async DeleteIncome(id){
         await this.props.deleteIncome(id)
         await this.props.readIncomes()
-        await this.props.graph()
+        await this.props.readGraph()
     }
 
     handleClickOpen(income,categoli,id){
@@ -63,7 +63,7 @@ class ReadIncomes extends Component {
     };
 
     async UpdateIncomeNext(){
-        await this.props.graph()
+        await this.props.readGraph()
         await this.props.readIncomes()
     }
 
@@ -82,8 +82,8 @@ class ReadIncomes extends Component {
     renderIncomes(){
         return(
             <React.Fragment>
-                <Paper>
-                    <Table>
+                <Paper style={{width: '100%',overflowX: 'auto',}}>
+                    <Table style={{minWidth: "750px"}}>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">カテゴリー</TableCell>
@@ -152,6 +152,6 @@ class ReadIncomes extends Component {
 
 const mapStateToProps = state => ({your_incomes: state.incomes.your_incomes  })
 
-const mapDispatchToProps = ({readIncomes,deleteIncome,graph,updateIncome})
+const mapDispatchToProps = ({readIncomes,deleteIncome,readGraph,updateIncome})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReadIncomes))

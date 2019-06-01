@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {submitExpend,searchExpendsCategoli,graph,readExpends} from "../actions";
+import {submitExpend,searchExpendsCategoli,readGraph,readExpends} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
@@ -16,7 +16,7 @@ class SubmitExpend extends Component {
     }
 
     componentDidMount(){
-        this.props.graph()
+        this.props.readGraph()
     }
 
     onChangeCategoliValue(e){
@@ -28,7 +28,7 @@ class SubmitExpend extends Component {
     }   
 
     async SubmitExpendNext(){
-        await this.props.graph()
+        await this.props.readGraph()
         await this.props.readExpends()
     }
 
@@ -74,6 +74,6 @@ class SubmitExpend extends Component {
 
 const mapStateToProps = state => ({result: state.searches.result  })
 
-const mapDispatchToProps = ({submitExpend,searchExpendsCategoli,graph,readExpends })
+const mapDispatchToProps = ({submitExpend,searchExpendsCategoli,readGraph,readExpends })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitExpend))

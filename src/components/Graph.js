@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { LineChart, ResponsiveContainer, Line, XAxis, YAxis, CartesianGrid, Tooltip,AreaChart,linearGradient ,Area} from "recharts"
 import { connect } from 'react-redux';
-import {graph} from "../actions";
+import {readGraph} from "../actions";
 
 
   
@@ -11,7 +11,7 @@ class Graph extends Component {
     }
 
     componentDidMount(){
-        this.props.graph()
+        this.props.readGraph()
     }
     
 
@@ -32,7 +32,7 @@ class Graph extends Component {
 }
 
 
-const mapDispatchToProps = ({graph })
+const mapDispatchToProps = ({readGraph })
 
 const mapStateToProps = state => ({graph_results: state.graphs.graph_results })
 

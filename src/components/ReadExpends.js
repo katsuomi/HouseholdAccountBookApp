@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {readExpends,deleteExpend,graph,updateExpend} from "../actions";
+import {readExpends,deleteExpend,readGraph,updateExpend} from "../actions";
 import { withRouter } from 'react-router';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -51,7 +51,7 @@ class ReadExpends extends Component {
     async DeleteExpend(id){
         await this.props.deleteExpend(id)
         await this.props.readExpends()
-        await this.props.graph()
+        await this.props.readGraph()
     }
 
     handleClickOpen(expend,categoli,id){
@@ -63,7 +63,7 @@ class ReadExpends extends Component {
     };
 
     async UpdateExpendNext(){
-        await this.props.graph()
+        await this.props.readGraph()
         await this.props.readExpends()
     }
 
@@ -82,8 +82,8 @@ class ReadExpends extends Component {
     renderExpends(){
         return(
             <React.Fragment>
-                <Paper>
-                    <Table>
+                <Paper style={{width: '100%',overflowX: 'auto',}}>
+                    <Table style={{minWidth: "750px"}}>
                         <TableHead>
                             <TableRow>
                                 <TableCell align="left">カテゴリー</TableCell>
@@ -153,6 +153,6 @@ class ReadExpends extends Component {
 
 const mapStateToProps = state => ({your_expends: state.expends.your_expends  })
 
-const mapDispatchToProps = ({readExpends,deleteExpend,graph,updateExpend})
+const mapDispatchToProps = ({readExpends,deleteExpend,readGraph,updateExpend})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReadExpends))

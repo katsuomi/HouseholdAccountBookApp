@@ -1,5 +1,5 @@
 import {
-    GRAPH
+    READ_GRAPH
 } from '../actions'
 
   
@@ -9,7 +9,7 @@ const initialState = {
   
 export default (state = initialState, action) => {
     switch (action.type){
-        case GRAPH:
+        case READ_GRAPH:
             return {
                 graph_results: action.graph_results
             }

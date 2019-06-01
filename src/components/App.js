@@ -49,14 +49,14 @@ class App extends Component {
               <Grid item xs={12} sm={6}>
                 <Graph />
               </Grid>
-              <Grid item xs={12} sm={12} md={3}></Grid> 
-              <Grid item xs={12} sm={12} md={6}>
+              <Grid item xs={12} sm={12} md={1}></Grid> 
+              <Grid item xs={12} sm={12} md={10}>
                 <br/>
                 <ReadIncomes />
                 <br/>
                 <ReadExpends />
               </Grid>
-              <Grid item xs={12} sm={12} md={3}></Grid> 
+              <Grid item xs={12} sm={12} md={1}></Grid> 
 
               <Grid item xs={12} sm={12} md={3}></Grid> 
               <Grid item xs={12} sm={12} md={6}>
