@@ -3,6 +3,7 @@ import Header from "../presentationalComponents/Header";
 import Grid from '@material-ui/core/Grid';
 import { connect } from 'react-redux';
 import LoginUser from './LoginUser';
+import ReadGraphs from './ReadGraphs';
 import SubmitExpend from './SubmitExpend';
 import SubmitIncome from './SubmitIncome';
 import ReadIncomes from './ReadIncomes';
@@ -67,7 +68,12 @@ class App extends Component {
           </div>
         :
           <div>
-            <LoginUser />
+            <Grid item xs={12} sm={12} md={12}>
+              <LoginUser />
+              <div className="center top-graph-style">
+                <ReadGraphs />
+              </div>
+            </Grid>
           </div>     
         }
       </React.Fragment>

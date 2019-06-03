@@ -8,6 +8,15 @@ body {
   }
 }
 
+.top-graph-style{
+  display: none;
+}
+
+@media screen and (min-width:1100px) and ( max-width:1670px) {
+  .top-graph-style{ 
+    display: block
+  }
+}
 
 .text_decoration_none{
   text-decoration: none;

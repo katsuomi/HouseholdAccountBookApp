@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {readIncomes,deleteIncome,readGraph,updateIncome} from "../actions";
+import {readIncomes,deleteIncome,readYourGraph,updateIncome} from "../actions";
 import { withRouter } from 'react-router';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -51,7 +51,7 @@ class ReadIncomes extends Component {
     async DeleteIncome(id){
         await this.props.deleteIncome(id)
         await this.props.readIncomes()
-        await this.props.readGraph()
+        await this.props.readYourGraph()
     }
 
     handleClickOpen(income,categoli,id){
@@ -63,7 +63,7 @@ class ReadIncomes extends Component {
     };
 
     async UpdateIncomeNext(){
-        await this.props.readGraph()
+        await this.props.readYourGraph()
         await this.props.readIncomes()
     }
 
@@ -152,6 +152,6 @@ class ReadIncomes extends Component {
 
 const mapStateToProps = state => ({your_incomes: state.incomes.your_incomes  })
 
-const mapDispatchToProps = ({readIncomes,deleteIncome,readGraph,updateIncome})
+const mapDispatchToProps = ({readIncomes,deleteIncome,readYourGraph,updateIncome})
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ReadIncomes))

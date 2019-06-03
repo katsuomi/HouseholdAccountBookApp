@@ -1,11 +1,12 @@
 import {
-    SIGNUP_USER,LOGIN_USER,LOGOUT,PASS_WORD_RESET,READ_CURRENT_USER
+    SIGNUP_USER,LOGIN_USER,LOGOUT,PASS_WORD_RESET,READ_CURRENT_USER,READ_USERS
 } from '../actions'
 
   
 const initialState = { 
     currentuser_uid: "",
-    currentuser_email: ""
+    currentuser_email: "",
+    users: []
 }
   
 export default (state = initialState, action) => {
@@ -28,6 +29,10 @@ export default (state = initialState, action) => {
             }
         case PASS_WORD_RESET:
             return state
+        case READ_USERS:
+            return {
+                users: action.users
+            }
         default:
             return state
     }

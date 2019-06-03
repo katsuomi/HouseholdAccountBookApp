@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {submitIncome,readGraph,readIncomes,searchIncomesCategoli} from "../actions";
+import {submitIncome,readYourGraph,readIncomes,searchIncomesCategoli} from "../actions";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'
 import { withRouter } from 'react-router';
@@ -18,7 +18,7 @@ class SubmitIncome extends Component {
     }
 
     async SubmitIncomeNext(){
-        await this.props.readGraph()
+        await this.props.readYourGraph()
         await this.props.readIncomes()
     }
 
@@ -71,6 +71,6 @@ class SubmitIncome extends Component {
 
 const mapStateToProps = state => ({result: state.searches.result  })
 
-const mapDispatchToProps = ({submitIncome,readGraph,readIncomes,searchIncomesCategoli })
+const mapDispatchToProps = ({submitIncome,readYourGraph,readIncomes,searchIncomesCategoli })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SubmitIncome))

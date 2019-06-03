@@ -11,7 +11,8 @@ export const SUBMIT_EXPEND = 'SUBMIT_EXPEND'
 export const SUBMIT_INCOME = 'SUBMIT_INCOME'
 export const SEARCH_EXPENDS_CATEGOLI = 'SEARCH_EXPENDS_CATEGOLI'
 export const SEARCH_INCOMES_CATEGOLI = 'SEARCH_INCOMES_CATEGOLI'
-export const READ_GRAPH = 'READ_GRAPH'
+export const READ_GRAPHS = 'READ_GRAPHS'
+export const READ_YOUR_GRAPH = 'READ_YOUR_GRAPH'
 export const READ_INCOMES = 'READ_INCOMES'
 export const READ_EXPENDS = 'READ_EXPENDS'
 export const READ_NEWS = 'READ_NEWS'
@@ -19,6 +20,8 @@ export const DELETE_INCOME = "DELETE_INCOME"
 export const DELETE_EXPEND = "DELETE_EXPEND"
 export const UPDATE_INCOME = "UPDATE_INCOME"
 export const UPDATE_EXPEND = "UPDATE_EXPEND"
+
+export const READ_USERS = 'READ_USERS'
 
 
 
@@ -110,8 +113,7 @@ export const submitExpend = (expend,categoli) => async dispatch => {
     data_expends_graph.id = querySnapshot.size;
     db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc().set(data_expends_graph)
   })
-
-
+  await db.collection("graphs").doc().set(data_expends_graph)
   dispatch({type: SUBMIT_EXPEND})
 }
 
@@ -134,7 +136,7 @@ export const submitIncome = (income,categoli) => async dispatch => {
     data_incomes_graph.id = querySnapshot.size;
     db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").doc().set(data_incomes_graph)
   })
-
+  db.collection("graphs").doc().set(data_incomes_graph)
   dispatch({type: SUBMIT_INCOME})
 }
 
@@ -171,7 +173,7 @@ export const searchIncomesCategoli = (categoli_value) => async dispatch => {
 }
 
 
-export const readGraph = () => async dispatch => {  
+export const readYourGraph = () => async dispatch => {  
   let results = []
   await db.collection("users").doc(firebase.auth().currentUser.uid).collection("graph").orderBy("id")
   .get()
@@ -193,8 +195,37 @@ export const readGraph = () => async dispatch => {
     })
   })
 
-  dispatch({type: READ_GRAPH,graph_results: graph_results})
+  dispatch({type: READ_YOUR_GRAPH,graph_results: graph_results})
 }
+
+
+
+export const readGraphs = () => async dispatch => {  
+  let results = []
+  await db.collection("graphs").orderBy("id")
+  .get()
+  .then(function(querySnapshot){
+    querySnapshot.forEach(function(doc) {
+      results.push({categoli: doc.data().categoli,amount: doc.data().amount })
+    });
+  })
+  .catch(function(error) {
+  });
+
+  let graph_results =  [{"categoli": "",amount: 0}]
+  let amount = 0
+  await results.map((result) => {
+    amount = amount + result.amount
+    graph_results.push({
+      categoli: result.categoli,
+      amount: amount 
+    })
+  })
+
+  console.log(graph_results)
+  dispatch({type: READ_GRAPHS,graph_results: graph_results})
+}
+
 
 
 export const readIncomes = () => async dispatch => {  
