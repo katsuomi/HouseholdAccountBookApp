@@ -38,7 +38,7 @@ cd HouseholdAccountBookApp
 $ docker-compose build
 
 # Dockerコンテナの起動
-$ docker-compose up -d
+$ docker-compose up
 
 # 確認
 $ docker-compose ps
