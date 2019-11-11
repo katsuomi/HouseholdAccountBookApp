@@ -3,7 +3,7 @@
 ## 💬 About
 You can easily understand the balance of payments by HouseholdAccountBookApp.
 
-## 💁‍♂️demo
+## 💁‍♂️ demo
 ![household](https://user-images.githubusercontent.com/36298285/68585511-cb0e4580-04c5-11ea-80b5-8dd4bab100f7.gif)
 
 ## 🌻 Version
