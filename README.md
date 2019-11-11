@@ -3,7 +3,7 @@
 ## 💬 About
 You can easily understand the balance of payments by HouseholdAccountBookApp.
 
-## 💁‍♂️demo
+## 💁‍♂️ demo
 ![household](https://user-images.githubusercontent.com/36298285/68585511-cb0e4580-04c5-11ea-80b5-8dd4bab100f7.gif)
 
 ## 🌻 Version
@@ -38,7 +38,7 @@ cd HouseholdAccountBookApp
 $ docker-compose build
 
 # Dockerコンテナの起動
-$ docker-compose up -d
+$ docker-compose up
 
 # 確認
 $ docker-compose ps
