@@ -6,6 +6,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/HouseholdAccountBookApp
-    command: sh -c "npm start"
+    command: sh -c "npm isntall && npm start"
     ports:
      - "3000:3000"
