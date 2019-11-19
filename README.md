@@ -40,10 +40,6 @@ $ docker-compose build
 # Dockerコンテナの起動
 $ docker-compose up
 
-# 確認
-$ docker-compose ps
-```
-
 下記のコンテナが起動していれば、OKです。
 
 |host||
