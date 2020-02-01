@@ -10,37 +10,38 @@ You can easily understand the balance of payments by HouseholdAccountBookApp.
 
 ||Name|Version|What|
 |:-:|:-:|:-:|:-|
-|frontend|JavaScript||高級言語|
-||npm|6.7.0|パッケージ管理システム|
-||React.js|16.11.0|JavaScriptライブラリ|
-||firesotre||データベース|
+|frontend|JavaScript||High-level languages|
+||npm|6.7.0|Package management system|
+||React.js|16.11.0|JavaScript Library|
+||Cloud firesotre||database|
 
 ## 🔰 Install & Setup
 
-#### 1. Dockerのダウンロード
+#### 1. Download Docker
 
-下記より、`Docker For Mac` か `Docker For Windows`をインストールして下さい。  
+The following procedure, please install Docker For Mac or Docker For Windows
 [https://docs.docker.com/install/](https://docs.docker.com/install/)
 
-#### 2. ソースコードの取得
+#### 2. Getting source code
 
 ```bash
 git clone https://github.com/katsuomi/HouseholdAccountBookApp.git
 cd HouseholdAccountBookApp
 ```
 
-#### 3. 起動
+#### 3. Start-up
 
-下記の手順で、コンテナを起動させて下さい。
+The following procedure, start the container.
 
 ```bash
-# Dockerイメージの作成
+# Create Docker image
 $ docker-compose build
 
-# Dockerコンテナの起動
+# Start Docker container
 $ docker-compose up
+```
 
-下記のコンテナが起動していれば、OKです。
+If the following local server started, it's ok.
 
 |host||
 |:-:|:-:|
