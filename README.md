@@ -38,7 +38,7 @@ The following procedure, start the container.
 # Create Docker image
 $ docker-compose build
 
-# Start Docker container
+# Run Docker container
 $ docker-compose up
 ```
 
